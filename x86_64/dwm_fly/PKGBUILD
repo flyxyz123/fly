@@ -1,0 +1,33 @@
+# Maintainer: Xiao Pan <gky44px1999@gmail.com>
+
+pkgname=dwm_fly-git
+pkgver=r1714.571bfa3
+pkgrel=1
+pkgdesc='My fork of dwm'
+arch=('any')
+url='https://github.com/flyxyz123/dwm_fly'
+license=('MIT')
+depends=('libx11' 'libxinerama' 'libxft')
+makedepends=('git')
+provides=('dwm')
+conflicts=('dwm')
+source=("git+$url#branch=fly")
+b2sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+	make
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+	# dwm config.mk default PREFIX=/usr/local, but if use default will return error, but manually sudo make install returns no error, not sure why, need to use PREFIX=/usr, more see:
+	# https://stackoverflow.com/questions/50743619/exists-in-filesystem-owned-by-filesystem-in-pkgbuild-for-arch-linux
+	make PREFIX=/usr DESTDIR="$pkgdir/" install
+	install -Dm644 README "$pkgdir/usr/share/doc/$pkgname/README"
+}

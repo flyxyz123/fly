@@ -1,0 +1,28 @@
+# Maintainer: Xiao Pan <gky44px1999@gmail.com>
+
+pkgname=xcross-git
+pkgver=r10.a17c6c9
+pkgrel=1
+pkgdesc='X11 draw a cross at cursor across screen '
+arch=('any')
+url='https://github.com/flyxyz123/xcross'
+license=('GPL3')
+depends=('libx11')
+source=("git+$url")
+b2sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+	make
+}
+
+package()
+{
+	cd "$srcdir/${pkgname%-git}"
+	make PREFIX=/usr DESTDIR="$pkgdir/" install
+}

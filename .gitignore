@@ -1,0 +1,6 @@
+# https://stackoverflow.com/a/9227991/9008720
+# https://stackoverflow.com/q/987142/9008720
+# not fully understood, single asterisk * behave so weird
+/*/**
+!/*/*/
+!/*/*/PKGBUILD
