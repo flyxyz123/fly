@@ -8,6 +8,9 @@ arch=('any')
 url='https://github.com/flyxyz123/xcross'
 license=('GPL3')
 depends=('libx11')
+makedepends=('git')
+provides=('xcross')
+conflicts=('xcross')
 source=("git+$url")
 b2sums=('SKIP')
 
