@@ -1,0 +1,26 @@
+# Maintainer: Xiao Pan <gky44px1999@gmail.com>
+
+pkgname=vidir2-git
+pkgver=r8.0a23b6a
+pkgrel=1
+pkgdesc='An extension to vidir from moreutils allowing copy and editing of symlinks'
+arch=('any')
+url='https://github.com/DamienRobert/vidir2'
+license=('GPL2')
+depends=('perl')
+makedepends=('git')
+provides=('vidir2')
+conflicts=('vidir2')
+source=("git+$url.git")
+b2sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+	install -D vidir2 -t "$pkgdir/usr/bin"
+	install -Dm644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
+}
